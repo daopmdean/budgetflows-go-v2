@@ -2,28 +2,22 @@ package main
 
 import (
 	"context"
-	"net/http"
-	"os"
-	"time"
 
 	"github.com/daopmdean/budgetflows-go-v2/conf"
 	"github.com/daopmdean/budgetflows-go-v2/entity"
+	"github.com/daopmdean/budgetflows-go-v2/rest"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func main() {
-	serverStartTime := time.Now()
 
-	appConfig := conf.Config{
-		MongoUri:  os.Getenv("MONGO_URI"),
-		SignedKey: os.Getenv("SECRET_KEY"),
-	}
+	conf.InitAppConfig()
 
 	mongoClient, err := mongo.Connect(
 		context.Background(),
-		options.Client().ApplyURI(appConfig.MongoUri),
+		options.Client().ApplyURI(conf.AppConfig.MongoUri),
 	)
 	if err != nil {
 		panic(err)
@@ -41,13 +35,7 @@ func main() {
 
 	r := gin.Default()
 
-	r.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message":   "I'm alive!",
-			"startTime": serverStartTime,
-			"timeNow":   time.Now(),
-		})
-	})
+	r.GET("/health", rest.HealthCheck)
 
 	r.Run(":5656")
 }
