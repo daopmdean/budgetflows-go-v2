@@ -2,16 +2,11 @@ package rest
 
 import (
 	"net/http"
-	"time"
 
-	"github.com/daopmdean/budgetflows-go-v2/conf"
+	"github.com/daopmdean/budgetflows-go-v2/biz"
 	"github.com/gin-gonic/gin"
 )
 
 func HealthCheck(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message":   "I'm alive!",
-		"startTime": conf.AppConfig.ServerStartTime,
-		"timeNow":   time.Now(),
-	})
+	c.JSON(http.StatusOK, biz.HealthCheck())
 }
