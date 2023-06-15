@@ -34,8 +34,12 @@ func main() {
 	setupDB(database)
 
 	r := gin.Default()
+	api := r.Group("/api")
 
-	r.GET("/health", rest.HealthCheck)
+	api.GET("/health", rest.HealthCheck)
+
+	api.POST("/login", rest.Login)
+	api.POST("/register", rest.Register)
 
 	r.Run(":5656")
 }
