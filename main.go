@@ -41,6 +41,8 @@ func main() {
 	api.POST("/login", rest.Login)
 	api.POST("/register", rest.Register)
 
+	api.POST("/records", rest.CreateRecord)
+
 	r.Run(":5656")
 }
 
@@ -49,4 +51,6 @@ func setupDB(database *mongo.Database) {
 
 	entity.AppUserDB.SetDB(database)
 	entity.RecordDB.SetDB(database)
+
+	entity.RecordDBPartition.SetDBPartition(database)
 }

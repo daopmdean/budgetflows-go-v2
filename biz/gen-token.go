@@ -6,20 +6,13 @@ import (
 
 	"github.com/daopmdean/budgetflows-go-v2/conf"
 	"github.com/daopmdean/budgetflows-go-v2/entity"
+	"github.com/daopmdean/budgetflows-go-v2/model"
 	"github.com/golang-jwt/jwt"
 )
 
-type AppClaims struct {
-	jwt.StandardClaims
-	UserId   int64  `json:"userId"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Phone    string `json:"phone"`
-}
-
 func GenerateToken(user *entity.AppUser, duration time.Duration) (string, error) {
 	now := time.Now()
-	var claims = AppClaims{
+	var claims = model.AppClaims{
 		StandardClaims: jwt.StandardClaims{
 			IssuedAt:  now.Unix(),
 			ExpiresAt: now.Add(duration).Unix(),
@@ -40,8 +33,8 @@ func GenerateToken(user *entity.AppUser, duration time.Duration) (string, error)
 	return signedToken, nil
 }
 
-func ExtractToken(token string) (*AppClaims, error) {
-	var claims AppClaims
+func ExtractToken(token string) (*model.AppClaims, error) {
+	var claims model.AppClaims
 
 	_, err := jwt.ParseWithClaims(token, &claims, func(t *jwt.Token) (interface{}, error) {
 		if t.Method.Alg() != jwt.SigningMethodHS256.Alg() {
