@@ -18,9 +18,11 @@ type AppClaims struct {
 }
 
 func GenerateToken(user *entity.AppUser, duration time.Duration) (string, error) {
+	now := time.Now()
 	var claims = AppClaims{
 		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(duration).Unix(),
+			IssuedAt:  now.Unix(),
+			ExpiresAt: now.Add(duration).Unix(),
 			Issuer:    "budgetflows.com",
 		},
 		UserId:   user.UserId,
@@ -43,7 +45,7 @@ func ExtractToken(token string) (*AppClaims, error) {
 
 	_, err := jwt.ParseWithClaims(token, &claims, func(t *jwt.Token) (interface{}, error) {
 		if t.Method.Alg() != jwt.SigningMethodHS256.Alg() {
-			return nil, fmt.Errorf("Invalid Algorithm")
+			return nil, fmt.Errorf("invalid algorithm")
 		}
 
 		return []byte(conf.AppConfig.SignedKey), nil
