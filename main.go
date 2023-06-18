@@ -45,6 +45,8 @@ func main() {
 }
 
 func setupDB(database *mongo.Database) {
+	entity.IdGenDB.SetDB(database)
+
 	entity.AppUserDB.SetDB(database)
 	entity.RecordDB.SetDB(database)
 }
