@@ -42,6 +42,7 @@ func main() {
 	api.POST("/register", rest.Register)
 
 	api.POST("/records", rest.CreateRecord)
+	api.POST("/records/list", rest.GetUserRecords)
 
 	r.Run(":5656")
 }

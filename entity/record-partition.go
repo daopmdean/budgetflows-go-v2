@@ -11,6 +11,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type MonthlyPartitionInstance struct {
@@ -54,7 +55,7 @@ func (pi *MonthlyPartitionInstance) Create(
 
 func (pi *MonthlyPartitionInstance) Query(
 	version string,
-	query interface{},
+	filter interface{},
 	skip, limit int64,
 	sortFields *primitive.M,
 ) *common.Response {
@@ -70,12 +71,12 @@ func (pi *MonthlyPartitionInstance) Query(
 
 	pi.ColName = getCollectionName(version)
 	pi.Instance.SetDB(pi.database)
-	return pi.Instance.Query(context.TODO(), query, skip, limit, sortFields)
+	return pi.Instance.Query(context.TODO(), filter, skip, limit, sortFields)
 }
 
 func (pi *MonthlyPartitionInstance) QueryOne(
 	version string,
-	query interface{},
+	filter interface{},
 ) *common.Response {
 	if !validPartitionVersion(version) {
 		return &common.Response{
@@ -89,7 +90,27 @@ func (pi *MonthlyPartitionInstance) QueryOne(
 
 	pi.ColName = getCollectionName(version)
 	pi.Instance.SetDB(pi.database)
-	return pi.Instance.QueryOne(context.TODO(), query)
+	return pi.Instance.QueryOne(context.TODO(), filter)
+}
+
+func (pi *MonthlyPartitionInstance) QueryWithOpt(
+	version string,
+	filter interface{},
+	opt *options.FindOptions,
+) *common.Response {
+	if !validPartitionVersion(version) {
+		return &common.Response{
+			Status: common.ResponseStatus.Error,
+			Error: &common.ErrorResponse{
+				ErrorCode:    "INVALID_PARTITION_VERSION",
+				ErrorMessage: "Invalid partition version: " + version,
+			},
+		}
+	}
+
+	pi.ColName = getCollectionName(version)
+	pi.Instance.SetDB(pi.database)
+	return pi.Instance.QueryWithOpt(context.TODO(), filter, opt)
 }
 
 func (pi *MonthlyPartitionInstance) Count(

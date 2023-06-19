@@ -18,7 +18,7 @@ func CreateRecord(userClaims *model.AppClaims, data *entity.Record) *common.Resp
 	}
 
 	now := time.Now().In(utils.TimeZoneVN)
-	version := utils.TimeToKey(now)
+	version := utils.TimeToMonthlyVersion(now)
 
 	data.UserId = userClaims.UserId
 

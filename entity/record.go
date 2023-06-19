@@ -21,7 +21,7 @@ type Record struct {
 	Amount     float64    `json:"amount,omitempty" bson:"amount,omitempty"`
 	Note       string     `json:"note,omitempty" bson:"note,omitempty"`
 	Tags       []string   `json:"tags,omitempty" bson:"tags,omitempty"`
-	RecordTime *time.Time `json:"countTime,omitempty" bson:"count_time,omitempty"`
+	RecordTime *time.Time `json:"recordTime,omitempty" bson:"record_time,omitempty"`
 
 	TimeKey string `json:"timeKey,omitempty" bson:"-"`
 }
