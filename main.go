@@ -43,6 +43,7 @@ func main() {
 
 	api.POST("/records", rest.CreateRecord)
 	api.POST("/records/list", rest.GetUserRecords)
+	api.DELETE("/records", rest.DeleteUserRecord)
 
 	r.Run(":5656")
 }

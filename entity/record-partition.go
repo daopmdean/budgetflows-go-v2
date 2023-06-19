@@ -152,6 +152,25 @@ func (pi *MonthlyPartitionInstance) Upsert(
 	return pi.Instance.Upsert(context.TODO(), query, updater)
 }
 
+func (pi *MonthlyPartitionInstance) Delete(
+	version string,
+	filter interface{},
+) *common.Response {
+	if !validPartitionVersion(version) {
+		return &common.Response{
+			Status: common.ResponseStatus.Error,
+			Error: &common.ErrorResponse{
+				ErrorCode:    "INVALID_PARTITION_VERSION",
+				ErrorMessage: "Invalid partition version: " + version,
+			},
+		}
+	}
+
+	pi.ColName = getCollectionName(version)
+	pi.Instance.SetDB(pi.database)
+	return pi.Instance.Delete(context.TODO(), filter)
+}
+
 func (pi *MonthlyPartitionInstance) PrepareCol(version string) error {
 	if !validPartitionVersion(version) {
 		return fmt.Errorf("invalid partition version " + version)
