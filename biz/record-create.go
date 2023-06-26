@@ -17,15 +17,14 @@ func CreateRecord(userClaims *model.AppClaims, data *entity.Record) *common.Resp
 		}
 	}
 
-	now := time.Now().In(utils.TimeZoneVN)
-	version := utils.TimeToMonthlyVersion(now)
-
 	data.UserId = userClaims.UserId
 
 	if data.RecordTime == nil {
+		now := time.Now().In(utils.TimeZoneVN)
 		data.RecordTime = &now
 	}
 
+	version := utils.TimeToMonthlyVersion(*data.RecordTime)
 	recordRes := entity.RecordDBPartition.Create(version, data)
 	if recordRes.Status != common.ResponseStatus.Success {
 		return recordRes

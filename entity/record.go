@@ -23,5 +23,5 @@ type Record struct {
 	Tags       []string   `json:"tags,omitempty" bson:"tags,omitempty"`
 	RecordTime *time.Time `json:"recordTime,omitempty" bson:"record_time,omitempty"`
 
-	TimeKey string `json:"timeKey,omitempty" bson:"-"`
+	Version string `json:"version,omitempty" bson:"-"`
 }
