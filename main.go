@@ -41,9 +41,11 @@ func main() {
 	api.POST("/login", rest.Login)
 	api.POST("/register", rest.Register)
 
-	api.POST("/records", rest.CreateRecord)
 	api.POST("/records/list", rest.GetUserRecords)
 	api.POST("/records/report", rest.ReportUserRecords)
+
+	api.POST("/records", rest.CreateRecord)
+	api.PUT("/records", rest.UpdateRecord)
 	api.DELETE("/records", rest.DeleteUserRecord)
 	api.POST("/records/prepare", rest.PrepareIndexes)
 

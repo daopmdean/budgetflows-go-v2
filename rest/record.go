@@ -25,6 +25,24 @@ func CreateRecord(c *gin.Context) {
 	Response(c, biz.CreateRecord(userClaims, &recordReq))
 }
 
+func UpdateRecord(c *gin.Context) {
+	auth := c.Request.Header.Get("Authorization")
+	token := biz.GetToken(auth)
+	userClaims, err := biz.ExtractToken(token)
+	if err != nil {
+		Response(c, UnauthorizedRes())
+		return
+	}
+
+	var recordReq entity.Record
+	if err := c.ShouldBindJSON(&recordReq); err != nil {
+		Response(c, InvalidRes(err.Error()))
+		return
+	}
+
+	Response(c, biz.UpdateRecord(userClaims, &recordReq))
+}
+
 func GetUserRecords(c *gin.Context) {
 	auth := c.Request.Header.Get("Authorization")
 	token := biz.GetToken(auth)
