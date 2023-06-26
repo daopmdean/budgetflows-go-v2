@@ -13,7 +13,7 @@ var RecordDB = &mongodb.Instance{
 }
 
 type Record struct {
-	ID          *primitive.ObjectID `json:"-" bson:"_id,omitempty"`
+	ID          *primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	CreatedTime *time.Time          `json:"createdTime,omitempty" bson:"created_time,omitempty"`
 	UpdatedTime *time.Time          `json:"updatedTime,omitempty" bson:"updated_time,omitempty"`
 
