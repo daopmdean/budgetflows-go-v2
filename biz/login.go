@@ -36,18 +36,8 @@ func Login(data *model.LoginRequest) *common.Response {
 		}
 	}
 
-	hashedPassword, err := utils.HashPassword(data.Password)
-	if err != nil {
-		return &common.Response{
-			Status: common.ResponseStatus.Error,
-			Error: &common.ErrorResponse{
-				ErrorCode:    "LOGIN_FAILED",
-				ErrorMessage: err.Error(),
-			},
-		}
-	}
-
-	if validPass := utils.CheckPasswordHash(data.Password, hashedPassword); !validPass {
+	user := queryRes.Data.([]*entity.AppUser)[0]
+	if validPass := utils.CheckPasswordHash(data.Password, user.Password); !validPass {
 		return &common.Response{
 			Status:  common.ResponseStatus.Invalid,
 			Message: "Invalid username or password",
