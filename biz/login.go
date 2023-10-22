@@ -44,7 +44,7 @@ func Login(data *model.LoginRequest) *common.Response {
 		}
 	}
 
-	token, err := GenerateToken(queryRes.Data.([]*entity.AppUser)[0], 24*time.Hour)
+	token, err := GenerateToken(queryRes.Data.([]*entity.AppUser)[0], 300*24*time.Hour)
 	if err != nil {
 		return &common.Response{
 			Status: common.ResponseStatus.Error,
