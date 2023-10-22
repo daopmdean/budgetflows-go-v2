@@ -41,7 +41,7 @@ func Login(data *model.LoginRequest) *common.Response {
 		return &common.Response{
 			Status: common.ResponseStatus.Error,
 			Error: &common.ErrorResponse{
-				ErrorCode:    "REGISTER_FAILED",
+				ErrorCode:    "LOGIN_FAILED",
 				ErrorMessage: err.Error(),
 			},
 		}
@@ -59,7 +59,7 @@ func Login(data *model.LoginRequest) *common.Response {
 		return &common.Response{
 			Status: common.ResponseStatus.Error,
 			Error: &common.ErrorResponse{
-				ErrorCode:    "REGISTER_FAILED",
+				ErrorCode:    "LOGIN_FAILED",
 				ErrorMessage: err.Error(),
 			},
 		}
@@ -69,7 +69,7 @@ func Login(data *model.LoginRequest) *common.Response {
 		Status: common.ResponseStatus.Success,
 		Data: []any{
 			gin.H{
-				"message": "Register success!",
+				"message": "Login success!",
 				"user":    queryRes.Data.([]*entity.AppUser)[0],
 				"token":   token,
 			},
