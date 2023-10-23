@@ -2,6 +2,7 @@ package biz
 
 import (
 	"context"
+	"strings"
 	"time"
 
 	"github.com/daopmdean/budgetflows-go-v2/entity"
@@ -25,6 +26,8 @@ func Register(data *model.RegisterRequest) *common.Response {
 			Message: "Password is required",
 		}
 	}
+
+	data.Username = strings.ToLower(data.Username)
 
 	queryRes := entity.AppUserDB.QueryOne(context.TODO(), &entity.AppUser{
 		Username: data.Username,

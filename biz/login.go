@@ -2,6 +2,7 @@ package biz
 
 import (
 	"context"
+	"strings"
 	"time"
 
 	"github.com/daopmdean/budgetflows-go-v2/entity"
@@ -27,7 +28,7 @@ func Login(data *model.LoginRequest) *common.Response {
 	}
 
 	queryRes := entity.AppUserDB.QueryOne(context.TODO(), &entity.AppUser{
-		Username: data.Username,
+		Username: strings.ToLower(data.Username),
 	})
 	if queryRes.Status != common.ResponseStatus.Success {
 		return &common.Response{
