@@ -1,6 +1,7 @@
 package biz
 
 import (
+	"strings"
 	"time"
 
 	"github.com/daopmdean/budgetflows-go-v2/entity"
@@ -22,6 +23,10 @@ func CreateRecord(userClaims *model.AppClaims, data *entity.Record) *common.Resp
 	if data.RecordTime == nil {
 		now := time.Now().In(utils.TimeZoneVN)
 		data.RecordTime = &now
+	}
+
+	for i, tag := range data.Tags {
+		data.Tags[i] = strings.ToLower(tag)
 	}
 
 	version := utils.TimeToMonthlyVersion(*data.RecordTime)
