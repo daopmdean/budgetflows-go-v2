@@ -34,6 +34,9 @@ func ReportUserRecords(userClaims *model.AppClaims, dataReq *model.RecordGet) *c
 			Sort: &primitive.M{"record_time": -1},
 		},
 	)
+	if recordRes.Status != common.ResponseStatus.Success {
+		return recordRes
+	}
 
 	totalAmount := 0.0
 
