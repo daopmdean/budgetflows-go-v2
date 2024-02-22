@@ -24,9 +24,11 @@ func Response(c *gin.Context, res *common.Response) {
 func UnauthorizedRes() *common.Response {
 	return &common.Response{
 		Status: common.ResponseStatus.Unauthorized,
-		Error: &common.ErrorResponse{
-			ErrorCode:    "UNAUTHORIZED",
-			ErrorMessage: "Unauthorized",
+		Errors: []*common.ErrRes{
+			{
+				ErrCode: "UNAUTHORIZED",
+				ErrMsg:  "Unauthorized",
+			},
 		},
 	}
 }
@@ -34,9 +36,11 @@ func UnauthorizedRes() *common.Response {
 func InvalidRes(msg string) *common.Response {
 	return &common.Response{
 		Status: common.ResponseStatus.Invalid,
-		Error: &common.ErrorResponse{
-			ErrorCode:    "INVALID",
-			ErrorMessage: msg,
+		Errors: []*common.ErrRes{
+			{
+				ErrCode: "INVALID",
+				ErrMsg:  msg,
+			},
 		},
 	}
 }

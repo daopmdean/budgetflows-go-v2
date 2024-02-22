@@ -41,9 +41,11 @@ func (pi *MonthlyPartitionInstance) Create(
 	if !validPartitionVersion(version) {
 		return &common.Response{
 			Status: common.ResponseStatus.Error,
-			Error: &common.ErrorResponse{
-				ErrorCode:    "INVALID_PARTITION_VERSION",
-				ErrorMessage: "Invalid partition version: " + version,
+			Errors: []*common.ErrRes{
+				{
+					ErrCode: "INVALID_PARTITION_VERSION",
+					ErrMsg:  "Invalid partition version: " + version,
+				},
 			},
 		}
 	}
@@ -62,9 +64,11 @@ func (pi *MonthlyPartitionInstance) Query(
 	if !validPartitionVersion(version) {
 		return &common.Response{
 			Status: common.ResponseStatus.Error,
-			Error: &common.ErrorResponse{
-				ErrorCode:    "INVALID_PARTITION_VERSION",
-				ErrorMessage: "Invalid partition version: " + version,
+			Errors: []*common.ErrRes{
+				{
+					ErrCode: "INVALID_PARTITION_VERSION",
+					ErrMsg:  "Invalid partition version: " + version,
+				},
 			},
 		}
 	}
@@ -81,9 +85,11 @@ func (pi *MonthlyPartitionInstance) QueryOne(
 	if !validPartitionVersion(version) {
 		return &common.Response{
 			Status: common.ResponseStatus.Error,
-			Error: &common.ErrorResponse{
-				ErrorCode:    "INVALID_PARTITION_VERSION",
-				ErrorMessage: "Invalid partition version: " + version,
+			Errors: []*common.ErrRes{
+				{
+					ErrCode: "INVALID_PARTITION_VERSION",
+					ErrMsg:  "Invalid partition version: " + version,
+				},
 			},
 		}
 	}
@@ -101,9 +107,11 @@ func (pi *MonthlyPartitionInstance) QueryWithOpt(
 	if !validPartitionVersion(version) {
 		return &common.Response{
 			Status: common.ResponseStatus.Error,
-			Error: &common.ErrorResponse{
-				ErrorCode:    "INVALID_PARTITION_VERSION",
-				ErrorMessage: "Invalid partition version: " + version,
+			Errors: []*common.ErrRes{
+				{
+					ErrCode: "INVALID_PARTITION_VERSION",
+					ErrMsg:  "Invalid partition version: " + version,
+				},
 			},
 		}
 	}
@@ -120,9 +128,11 @@ func (pi *MonthlyPartitionInstance) Count(
 	if !validPartitionVersion(version) {
 		return &common.Response{
 			Status: common.ResponseStatus.Error,
-			Error: &common.ErrorResponse{
-				ErrorCode:    "INVALID_PARTITION_VERSION",
-				ErrorMessage: "Invalid partition version: " + version,
+			Errors: []*common.ErrRes{
+				{
+					ErrCode: "INVALID_PARTITION_VERSION",
+					ErrMsg:  "Invalid partition version: " + version,
+				},
 			},
 		}
 	}
@@ -140,9 +150,11 @@ func (pi *MonthlyPartitionInstance) Upsert(
 	if !validPartitionVersion(version) {
 		return &common.Response{
 			Status: common.ResponseStatus.Error,
-			Error: &common.ErrorResponse{
-				ErrorCode:    "INVALID_PARTITION_VERSION",
-				ErrorMessage: "Invalid partition version: " + version,
+			Errors: []*common.ErrRes{
+				{
+					ErrCode: "INVALID_PARTITION_VERSION",
+					ErrMsg:  "Invalid partition version: " + version,
+				},
 			},
 		}
 	}
@@ -159,9 +171,11 @@ func (pi *MonthlyPartitionInstance) Delete(
 	if !validPartitionVersion(version) {
 		return &common.Response{
 			Status: common.ResponseStatus.Error,
-			Error: &common.ErrorResponse{
-				ErrorCode:    "INVALID_PARTITION_VERSION",
-				ErrorMessage: "Invalid partition version: " + version,
+			Errors: []*common.ErrRes{
+				{
+					ErrCode: "INVALID_PARTITION_VERSION",
+					ErrMsg:  "Invalid partition version: " + version,
+				},
 			},
 		}
 	}

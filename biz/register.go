@@ -43,9 +43,11 @@ func Register(data *model.RegisterRequest) *common.Response {
 	if err != nil {
 		return &common.Response{
 			Status: common.ResponseStatus.Error,
-			Error: &common.ErrorResponse{
-				ErrorCode:    "REGISTER_FAILED",
-				ErrorMessage: err.Error(),
+			Errors: []*common.ErrRes{
+				{
+					ErrCode: "REGISTER_FAILED",
+					ErrMsg:  err.Error(),
+				},
 			},
 		}
 	}
@@ -70,9 +72,11 @@ func Register(data *model.RegisterRequest) *common.Response {
 	if err != nil {
 		return &common.Response{
 			Status: common.ResponseStatus.Error,
-			Error: &common.ErrorResponse{
-				ErrorCode:    "REGISTER_FAILED",
-				ErrorMessage: err.Error(),
+			Errors: []*common.ErrRes{
+				{
+					ErrCode: "REGISTER_FAILED",
+					ErrMsg:  err.Error(),
+				},
 			},
 		}
 	}

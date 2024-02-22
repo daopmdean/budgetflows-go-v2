@@ -28,8 +28,10 @@ func PrepareIndexes(userClaims *model.AppClaims, data *entity.Record) *common.Re
 	if err != nil {
 		return &common.Response{
 			Status: common.ResponseStatus.Error,
-			Error: &common.ErrorResponse{
-				ErrorMessage: err.Error(),
+			Errors: []*common.ErrRes{
+				{
+					ErrMsg: err.Error(),
+				},
 			},
 		}
 	}

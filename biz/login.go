@@ -49,9 +49,11 @@ func Login(data *model.LoginRequest) *common.Response {
 	if err != nil {
 		return &common.Response{
 			Status: common.ResponseStatus.Error,
-			Error: &common.ErrorResponse{
-				ErrorCode:    "LOGIN_FAILED",
-				ErrorMessage: err.Error(),
+			Errors: []*common.ErrRes{
+				{
+					ErrCode: "LOGIN_FAILED",
+					ErrMsg:  err.Error(),
+				},
 			},
 		}
 	}
