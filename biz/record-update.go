@@ -1,6 +1,8 @@
 package biz
 
 import (
+	"time"
+
 	"github.com/daopmdean/budgetflows-go-v2/entity"
 	"github.com/daopmdean/budgetflows-go-v2/model"
 	"github.com/daopmdean/budgetflows-go-v2/utils"
@@ -23,7 +25,15 @@ func UpdateRecord(userClaims *model.AppClaims, data *entity.Record) *common.Resp
 		}
 	}
 
-	existRecordRes := entity.RecordDBPartition.QueryOne("2023_06", &entity.Record{
+	var version string
+	if data.Version == "" {
+		now := time.Now().In(utils.TimeZoneVN)
+		version = utils.TimeToMonthlyVersion(now)
+	} else {
+		version = data.Version
+	}
+
+	existRecordRes := entity.RecordDBPartition.QueryOne(version, &entity.Record{
 		ID: data.ID,
 	})
 	if existRecordRes.Status != common.ResponseStatus.Success {
