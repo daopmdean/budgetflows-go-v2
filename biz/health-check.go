@@ -17,6 +17,7 @@ func HealthCheck() *common.Response {
 				StartedTime: conf.AppConfig.ServerStartTime,
 				AppName:     "budgetflows-go-v2",
 				TimeNow:     time.Now(),
+				Flag:        "version-1.0.0",
 			},
 		},
 	}

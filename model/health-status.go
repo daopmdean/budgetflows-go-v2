@@ -7,4 +7,5 @@ type HealthStatus struct {
 	StartedTime time.Time `json:"timeStarted"`
 	TimeNow     time.Time `json:"timeNow"`
 	AppName     string    `json:"appName"`
+	Flag        string    `json:"flag"`
 }
