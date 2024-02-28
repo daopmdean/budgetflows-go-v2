@@ -15,22 +15,21 @@ import (
 )
 
 type MonthlyPartitionInstance struct {
-	mongodb.Instance
-	database *mongo.Database
+	partition map[string]*mongodb.Instance // key: collection name, value: mongodb instance
+	database  *mongo.Database
 }
 
-var RecordDBPartition = &MonthlyPartitionInstance{
-	Instance: mongodb.Instance{
-		ColName:     "record",
-		TemplateObj: new(Record),
-	},
+var RecordDBPartition = &MonthlyPartitionInstance{}
+
+func (pi *MonthlyPartitionInstance) GetPartitions() map[string]*mongodb.Instance {
+	return pi.partition
 }
 
 func (pi *MonthlyPartitionInstance) SetDBPartition(
 	database *mongo.Database,
 ) *MonthlyPartitionInstance {
-	pi.Instance.SetDB(database)
 	pi.database = database
+	pi.partition = make(map[string]*mongodb.Instance)
 	return pi
 }
 
@@ -50,9 +49,8 @@ func (pi *MonthlyPartitionInstance) Create(
 		}
 	}
 
-	pi.ColName = getCollectionName(version)
-	pi.Instance.SetDB(pi.database)
-	return pi.Instance.Create(context.TODO(), ele)
+	ins := pi.getPartition(version)
+	return ins.Create(context.TODO(), ele)
 }
 
 func (pi *MonthlyPartitionInstance) Query(
@@ -73,9 +71,8 @@ func (pi *MonthlyPartitionInstance) Query(
 		}
 	}
 
-	pi.ColName = getCollectionName(version)
-	pi.Instance.SetDB(pi.database)
-	return pi.Instance.Query(context.TODO(), filter, skip, limit, sortFields)
+	ins := pi.getPartition(version)
+	return ins.Query(context.TODO(), filter, skip, limit, sortFields)
 }
 
 func (pi *MonthlyPartitionInstance) QueryOne(
@@ -94,9 +91,8 @@ func (pi *MonthlyPartitionInstance) QueryOne(
 		}
 	}
 
-	pi.ColName = getCollectionName(version)
-	pi.Instance.SetDB(pi.database)
-	return pi.Instance.QueryOne(context.TODO(), filter)
+	ins := pi.getPartition(version)
+	return ins.QueryOne(context.TODO(), filter)
 }
 
 func (pi *MonthlyPartitionInstance) QueryWithOpt(
@@ -116,9 +112,8 @@ func (pi *MonthlyPartitionInstance) QueryWithOpt(
 		}
 	}
 
-	pi.ColName = getCollectionName(version)
-	pi.Instance.SetDB(pi.database)
-	return pi.Instance.QueryWithOpt(context.TODO(), filter, opt)
+	ins := pi.getPartition(version)
+	return ins.QueryWithOpt(context.TODO(), filter, opt)
 }
 
 func (pi *MonthlyPartitionInstance) Count(
@@ -137,9 +132,8 @@ func (pi *MonthlyPartitionInstance) Count(
 		}
 	}
 
-	pi.ColName = getCollectionName(version)
-	pi.Instance.SetDB(pi.database)
-	return pi.Instance.Count(context.TODO(), query)
+	ins := pi.getPartition(version)
+	return ins.Count(context.TODO(), query)
 }
 
 func (pi *MonthlyPartitionInstance) Upsert(
@@ -159,9 +153,8 @@ func (pi *MonthlyPartitionInstance) Upsert(
 		}
 	}
 
-	pi.ColName = getCollectionName(version)
-	pi.Instance.SetDB(pi.database)
-	return pi.Instance.Upsert(context.TODO(), query, updater)
+	ins := pi.getPartition(version)
+	return ins.Upsert(context.TODO(), query, updater)
 }
 
 func (pi *MonthlyPartitionInstance) Delete(
@@ -180,9 +173,8 @@ func (pi *MonthlyPartitionInstance) Delete(
 		}
 	}
 
-	pi.ColName = getCollectionName(version)
-	pi.Instance.SetDB(pi.database)
-	return pi.Instance.Delete(context.TODO(), filter)
+	ins := pi.getPartition(version)
+	return ins.Delete(context.TODO(), filter)
 }
 
 func (pi *MonthlyPartitionInstance) PrepareCol(version string) error {
@@ -190,14 +182,11 @@ func (pi *MonthlyPartitionInstance) PrepareCol(version string) error {
 		return fmt.Errorf("invalid partition version " + version)
 	}
 
-	pi.ColName = getCollectionName(version)
-	pi.Instance.SetDB(pi.database)
-
 	if !pi.existCol(version) {
-		pi.database.CreateCollection(context.TODO(), pi.ColName)
+		pi.database.CreateCollection(context.TODO(), getCollectionName(version))
 	}
 
-	err := pi.CreateIndex()
+	err := pi.CreateIndex(version)
 	if err != nil {
 		return err
 	}
@@ -205,12 +194,11 @@ func (pi *MonthlyPartitionInstance) PrepareCol(version string) error {
 	return nil
 }
 
-func (pi *MonthlyPartitionInstance) CreateIndex() error {
-
-	pi.Instance.
-		GetClient().
-		Database(pi.Instance.DBName).
-		Collection(pi.ColName).
+func (pi *MonthlyPartitionInstance) CreateIndex(version string) error {
+	pi.database.
+		Client().
+		Database(pi.database.Name()).
+		Collection(getCollectionName(version)).
 		Indexes().
 		CreateOne(context.TODO(), mongo.IndexModel{
 			Keys: bson.D{
@@ -220,6 +208,21 @@ func (pi *MonthlyPartitionInstance) CreateIndex() error {
 		})
 
 	return nil
+}
+
+func (pi *MonthlyPartitionInstance) getPartition(version string) *mongodb.Instance {
+	colName := getCollectionName(version)
+	if ins, ok := pi.partition[colName]; ok {
+		return ins
+	}
+
+	pi.partition[colName] = &mongodb.Instance{
+		ColName:     colName,
+		TemplateObj: new(Record),
+	}
+	pi.partition[colName].SetDB(pi.database)
+
+	return pi.partition[colName]
 }
 
 func (pi *MonthlyPartitionInstance) existCol(version string) bool {

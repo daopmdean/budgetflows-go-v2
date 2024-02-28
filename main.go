@@ -49,7 +49,9 @@ func main() {
 	api.POST("/records", rest.CreateRecord)
 	api.PUT("/records", rest.UpdateRecord)
 	api.DELETE("/records", rest.DeleteUserRecord)
+
 	api.POST("/records/prepare", rest.PrepareIndexes)
+	api.GET("/records/partitions", rest.GetRecordPartitions)
 
 	r.Run(":5656")
 }
