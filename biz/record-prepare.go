@@ -22,6 +22,8 @@ func PrepareIndexes(userClaims *model.AppClaims, data *entity.Record) *common.Re
 	if data.Version == "" {
 		now := time.Now().In(utils.TimeZoneVN)
 		version = utils.TimeToMonthlyVersion(now)
+	} else {
+		version = data.Version
 	}
 
 	err := entity.RecordDBPartition.PrepareCol(version)
@@ -30,7 +32,8 @@ func PrepareIndexes(userClaims *model.AppClaims, data *entity.Record) *common.Re
 			Status: common.ResponseStatus.Error,
 			Errors: []*common.ErrRes{
 				{
-					ErrMsg: err.Error(),
+					ErrCode: "PREPARE_ERROR",
+					ErrMsg:  err.Error(),
 				},
 			},
 		}
