@@ -61,18 +61,6 @@ func GetUserRecords(c *gin.Context) {
 	Response(c, biz.GetUserRecords(userClaims, &recordReq))
 }
 
-func GetRecentUserRecords(c *gin.Context) {
-	auth := c.Request.Header.Get("Authorization")
-	token := biz.GetToken(auth)
-	userClaims, err := biz.ExtractToken(token)
-	if err != nil {
-		Response(c, UnauthorizedRes())
-		return
-	}
-
-	Response(c, biz.GetRecentUserRecords(userClaims))
-}
-
 func ReportUserRecords(c *gin.Context) {
 	auth := c.Request.Header.Get("Authorization")
 	token := biz.GetToken(auth)

@@ -43,7 +43,6 @@ func main() {
 	api.POST("/register", rest.Register)
 
 	api.POST("/records/list", rest.GetUserRecords)
-	api.POST("/records/recent", rest.GetRecentUserRecords)
 	api.POST("/records/report", rest.ReportUserRecords)
 
 	api.POST("/records", rest.CreateRecord)
