@@ -40,9 +40,13 @@ func ReportUserRecords(userClaims *model.AppClaims, dataReq *model.RecordGet) *c
 
 	totalAmount := 0.0
 
+	tagsMap := map[string]float64{}
 	records := recordRes.Data.([]*entity.Record)
 	for _, record := range records {
 		totalAmount += record.Amount
+		for _, tag := range record.Tags {
+			tagsMap[tag] += record.Amount
+		}
 	}
 
 	return &common.Response{
@@ -51,6 +55,7 @@ func ReportUserRecords(userClaims *model.AppClaims, dataReq *model.RecordGet) *c
 			map[string]any{
 				"timeKey":     version,
 				"totalAmount": totalAmount,
+				"tags":        tagsMap,
 			},
 		},
 	}
