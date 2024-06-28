@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-var AppConfig Config
+var AppConfig *Config
 
 type Config struct {
 	AppName         string
@@ -25,5 +25,5 @@ func InitAppConfig() {
 		ServerStartTime: time.Now(),
 	}
 
-	AppConfig = appConfig
+	AppConfig = &appConfig
 }
