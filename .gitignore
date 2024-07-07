@@ -1,4 +1,6 @@
 .vscode
 .text
+.env
+env.txt
 __debug_bin
 __debug_bin.exe
