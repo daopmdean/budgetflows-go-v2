@@ -3,7 +3,7 @@ module github.com/daopmdean/budgetflows-go-v2
 go 1.19
 
 require (
-	github.com/daopmdean/summer v0.0.0-20240720162739-63a84705cbb4
+	github.com/daopmdean/summer v0.0.0-20240829100553-626a42c04eca
 	github.com/gin-gonic/gin v1.9.1
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/golang-jwt/jwt/v5 v5.2.1

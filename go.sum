@@ -11,6 +11,8 @@ github.com/chenzhuoyu/iasm v0.9.1 h1:tUHQJXo3NhBqw6s33wkGn9SP3bvrWLdlVIJ3hQBL7P0
 github.com/chenzhuoyu/iasm v0.9.1/go.mod h1:Xjy2NpN3h7aUqeqM+woSuuvxmIe6+DDsiNLIrkAmYog=
 github.com/daopmdean/summer v0.0.0-20240720162739-63a84705cbb4 h1:6eUx+PT0DJWX2Tewkcd+1W22uvZP/DXM8B2zPRxkS0s=
 github.com/daopmdean/summer v0.0.0-20240720162739-63a84705cbb4/go.mod h1:nxbeH9VlJHbOPNNa2Fn9ZQeisxciL69nauKUQv/sFwQ=
+github.com/daopmdean/summer v0.0.0-20240829100553-626a42c04eca h1:Xt+G+pPlHnaE9pE8VGI1yysdhpjr9Gx42nrHykWeYqI=
+github.com/daopmdean/summer v0.0.0-20240829100553-626a42c04eca/go.mod h1:nxbeH9VlJHbOPNNa2Fn9ZQeisxciL69nauKUQv/sFwQ=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

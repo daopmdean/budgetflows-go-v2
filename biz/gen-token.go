@@ -19,6 +19,7 @@ func GenerateToken(user *entity.AppUser, duration time.Duration) (string, error)
 			ExpiresAt: &jwt.NumericDate{Time: now.Add(duration)},
 			Issuer:    "budgetflows.com",
 		},
+		UserId:   user.UserId,
 		Username: user.Username,
 		Email:    user.Email,
 		Phone:    user.Phone,
