@@ -6,11 +6,12 @@ import (
 	"github.com/daopmdean/budgetflows-go-v2/entity"
 	"github.com/daopmdean/budgetflows-go-v2/model"
 	"github.com/daopmdean/budgetflows-go-v2/utils"
+	"github.com/daopmdean/summer/auth"
 	"github.com/daopmdean/summer/common"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func DeleteUserRecord(userClaims *model.AppClaims, dataReq *model.RecordDelete) *common.Response {
+func DeleteUserRecord(userClaims *auth.SummerClaim, dataReq *model.RecordDelete) *common.Response {
 	if userClaims.UserId == 0 {
 		return &common.Response{
 			Status:  common.ResponseStatus.Invalid,

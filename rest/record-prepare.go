@@ -2,6 +2,7 @@ package rest
 
 import (
 	"github.com/daopmdean/budgetflows-go-v2/biz"
+	"github.com/daopmdean/budgetflows-go-v2/conf"
 	"github.com/daopmdean/budgetflows-go-v2/entity"
 	"github.com/daopmdean/summer/auth"
 	"github.com/gin-gonic/gin"
@@ -15,7 +16,7 @@ func PrepareIndexes(c *gin.Context) {
 		return
 	}
 
-	userClaims, err := biz.ExtractToken(token)
+	userClaims, err := auth.ParseToken(token, conf.AppConfig.SignedKey)
 	if err != nil {
 		Response(c, UnauthorizedRes())
 		return

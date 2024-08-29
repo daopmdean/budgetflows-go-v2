@@ -4,13 +4,13 @@ import (
 	"time"
 
 	"github.com/daopmdean/budgetflows-go-v2/entity"
-	"github.com/daopmdean/budgetflows-go-v2/model"
 	"github.com/daopmdean/budgetflows-go-v2/utils"
+	"github.com/daopmdean/summer/auth"
 	"github.com/daopmdean/summer/common"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func UpdateRecord(userClaims *model.AppClaims, data *entity.Record) *common.Response {
+func UpdateRecord(userClaims *auth.SummerClaim, data *entity.Record) *common.Response {
 	if userClaims.UserId == 0 {
 		return &common.Response{
 			Status:  common.ResponseStatus.Invalid,

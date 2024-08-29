@@ -6,12 +6,13 @@ import (
 	"github.com/daopmdean/budgetflows-go-v2/entity"
 	"github.com/daopmdean/budgetflows-go-v2/model"
 	"github.com/daopmdean/budgetflows-go-v2/utils"
+	"github.com/daopmdean/summer/auth"
 	"github.com/daopmdean/summer/common"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func ReportUserRecords(userClaims *model.AppClaims, dataReq *model.RecordGet) *common.Response {
+func ReportUserRecords(userClaims *auth.SummerClaim, dataReq *model.RecordGet) *common.Response {
 	if userClaims.UserId == 0 {
 		return &common.Response{
 			Status:  common.ResponseStatus.Invalid,

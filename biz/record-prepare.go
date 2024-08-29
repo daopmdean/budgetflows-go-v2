@@ -5,12 +5,12 @@ import (
 	"time"
 
 	"github.com/daopmdean/budgetflows-go-v2/entity"
-	"github.com/daopmdean/budgetflows-go-v2/model"
 	"github.com/daopmdean/budgetflows-go-v2/utils"
+	"github.com/daopmdean/summer/auth"
 	"github.com/daopmdean/summer/common"
 )
 
-func PrepareIndexes(userClaims *model.AppClaims, data *entity.Record) *common.Response {
+func PrepareIndexes(userClaims *auth.SummerClaim, data *entity.Record) *common.Response {
 	if userClaims.UserId == 0 {
 		return &common.Response{
 			Status:  common.ResponseStatus.Invalid,
