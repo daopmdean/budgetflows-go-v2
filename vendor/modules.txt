@@ -28,8 +28,9 @@ github.com/chenzhuoyu/base64x
 ## explicit; go 1.16
 github.com/chenzhuoyu/iasm/expr
 github.com/chenzhuoyu/iasm/x86_64
-# github.com/daopmdean/summer v0.0.0-20240222102227-29e86f94861d
+# github.com/daopmdean/summer v0.0.0-20240720162739-63a84705cbb4
 ## explicit; go 1.17
+github.com/daopmdean/summer/auth
 github.com/daopmdean/summer/common
 github.com/daopmdean/summer/mongodb
 # github.com/gabriel-vasile/mimetype v1.4.3
@@ -72,6 +73,9 @@ github.com/goccy/go-json/internal/runtime
 # github.com/golang-jwt/jwt v3.2.2+incompatible
 ## explicit
 github.com/golang-jwt/jwt
+# github.com/golang-jwt/jwt/v5 v5.2.1
+## explicit; go 1.18
+github.com/golang-jwt/jwt/v5
 # github.com/golang/snappy v0.0.4
 ## explicit
 github.com/golang/snappy

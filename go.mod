@@ -3,7 +3,7 @@ module github.com/daopmdean/budgetflows-go-v2
 go 1.19
 
 require (
-	github.com/daopmdean/summer v0.0.0-20240222102227-29e86f94861d
+	github.com/daopmdean/summer v0.0.0-20240720162739-63a84705cbb4
 	github.com/gin-gonic/gin v1.9.1
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	go.mongodb.org/mongo-driver v1.14.0
@@ -20,6 +20,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.18.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
+	github.com/golang-jwt/jwt/v5 v5.2.1 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.17.7 // indirect

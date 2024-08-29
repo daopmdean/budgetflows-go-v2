@@ -7,18 +7,18 @@ import (
 	"github.com/daopmdean/budgetflows-go-v2/conf"
 	"github.com/daopmdean/budgetflows-go-v2/entity"
 	"github.com/daopmdean/budgetflows-go-v2/model"
-	"github.com/golang-jwt/jwt"
+	"github.com/daopmdean/summer/auth"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 func GenerateToken(user *entity.AppUser, duration time.Duration) (string, error) {
 	now := time.Now()
-	var claims = model.AppClaims{
-		StandardClaims: jwt.StandardClaims{
-			IssuedAt:  now.Unix(),
-			ExpiresAt: now.Add(duration).Unix(),
+	claims := auth.SummerClaim{
+		RegisteredClaims: jwt.RegisteredClaims{
+			IssuedAt:  &jwt.NumericDate{Time: now},
+			ExpiresAt: &jwt.NumericDate{Time: now.Add(duration)},
 			Issuer:    "budgetflows.com",
 		},
-		UserId:   user.UserId,
 		Username: user.Username,
 		Email:    user.Email,
 		Phone:    user.Phone,
@@ -35,8 +35,9 @@ func GenerateToken(user *entity.AppUser, duration time.Duration) (string, error)
 
 func ExtractToken(token string) (*model.AppClaims, error) {
 	var claims model.AppClaims
+	var summerClaim auth.SummerClaim
 
-	_, err := jwt.ParseWithClaims(token, &claims, func(t *jwt.Token) (interface{}, error) {
+	_, err := jwt.ParseWithClaims(token, &summerClaim, func(t *jwt.Token) (interface{}, error) {
 		if t.Method.Alg() != jwt.SigningMethodHS256.Alg() {
 			return nil, fmt.Errorf("invalid algorithm")
 		}

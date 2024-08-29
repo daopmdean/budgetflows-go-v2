@@ -4,12 +4,18 @@ import (
 	"github.com/daopmdean/budgetflows-go-v2/biz"
 	"github.com/daopmdean/budgetflows-go-v2/entity"
 	"github.com/daopmdean/budgetflows-go-v2/model"
+	"github.com/daopmdean/summer/auth"
 	"github.com/gin-gonic/gin"
 )
 
 func CreateRecord(c *gin.Context) {
-	auth := c.Request.Header.Get("Authorization")
-	token := biz.GetToken(auth)
+	bearer := c.Request.Header.Get("Authorization")
+	token, err := auth.ExtractTokenFromHeader(bearer)
+	if err != nil {
+		Response(c, UnauthorizedRes())
+		return
+	}
+
 	userClaims, err := biz.ExtractToken(token)
 	if err != nil {
 		Response(c, UnauthorizedRes())
@@ -26,8 +32,13 @@ func CreateRecord(c *gin.Context) {
 }
 
 func UpdateRecord(c *gin.Context) {
-	auth := c.Request.Header.Get("Authorization")
-	token := biz.GetToken(auth)
+	bearer := c.Request.Header.Get("Authorization")
+	token, err := auth.ExtractTokenFromHeader(bearer)
+	if err != nil {
+		Response(c, UnauthorizedRes())
+		return
+	}
+
 	userClaims, err := biz.ExtractToken(token)
 	if err != nil {
 		Response(c, UnauthorizedRes())
@@ -44,8 +55,13 @@ func UpdateRecord(c *gin.Context) {
 }
 
 func GetUserRecords(c *gin.Context) {
-	auth := c.Request.Header.Get("Authorization")
-	token := biz.GetToken(auth)
+	bearer := c.Request.Header.Get("Authorization")
+	token, err := auth.ExtractTokenFromHeader(bearer)
+	if err != nil {
+		Response(c, UnauthorizedRes())
+		return
+	}
+
 	userClaims, err := biz.ExtractToken(token)
 	if err != nil {
 		Response(c, UnauthorizedRes())
@@ -62,8 +78,13 @@ func GetUserRecords(c *gin.Context) {
 }
 
 func ReportUserRecords(c *gin.Context) {
-	auth := c.Request.Header.Get("Authorization")
-	token := biz.GetToken(auth)
+	bearer := c.Request.Header.Get("Authorization")
+	token, err := auth.ExtractTokenFromHeader(bearer)
+	if err != nil {
+		Response(c, UnauthorizedRes())
+		return
+	}
+
 	userClaims, err := biz.ExtractToken(token)
 	if err != nil {
 		Response(c, UnauthorizedRes())
@@ -80,8 +101,13 @@ func ReportUserRecords(c *gin.Context) {
 }
 
 func DeleteUserRecord(c *gin.Context) {
-	auth := c.Request.Header.Get("Authorization")
-	token := biz.GetToken(auth)
+	bearer := c.Request.Header.Get("Authorization")
+	token, err := auth.ExtractTokenFromHeader(bearer)
+	if err != nil {
+		Response(c, UnauthorizedRes())
+		return
+	}
+
 	userClaims, err := biz.ExtractToken(token)
 	if err != nil {
 		Response(c, UnauthorizedRes())

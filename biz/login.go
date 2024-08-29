@@ -7,20 +7,20 @@ import (
 
 	"github.com/daopmdean/budgetflows-go-v2/entity"
 	"github.com/daopmdean/budgetflows-go-v2/model"
-	"github.com/daopmdean/budgetflows-go-v2/utils"
+	"github.com/daopmdean/summer/auth"
 	"github.com/daopmdean/summer/common"
 	"github.com/gin-gonic/gin"
 )
 
-func Login(data *model.LoginRequest) *common.Response {
-	if data.Username == "" {
+func Login(req *model.LoginRequest) *common.Response {
+	if req.Username == "" {
 		return &common.Response{
 			Status:  common.ResponseStatus.Invalid,
 			Message: "Username is required",
 		}
 	}
 
-	if data.Password == "" {
+	if req.Password == "" {
 		return &common.Response{
 			Status:  common.ResponseStatus.Invalid,
 			Message: "Password is required",
@@ -28,7 +28,7 @@ func Login(data *model.LoginRequest) *common.Response {
 	}
 
 	queryRes := entity.AppUserDB.QueryOne(context.TODO(), &entity.AppUser{
-		Username: strings.ToLower(data.Username),
+		Username: strings.ToLower(req.Username),
 	})
 	if queryRes.Status != common.ResponseStatus.Success {
 		return &common.Response{
@@ -38,7 +38,7 @@ func Login(data *model.LoginRequest) *common.Response {
 	}
 
 	user := queryRes.Data.([]*entity.AppUser)[0]
-	if validPass := utils.CheckPasswordHash(user.Password, data.Password); !validPass {
+	if err := auth.CheckPasswordHash(req.Password, user.Password); err != nil {
 		return &common.Response{
 			Status:  common.ResponseStatus.Invalid,
 			Message: "Invalid username or password",
@@ -47,15 +47,7 @@ func Login(data *model.LoginRequest) *common.Response {
 
 	token, err := GenerateToken(queryRes.Data.([]*entity.AppUser)[0], 300*24*time.Hour)
 	if err != nil {
-		return &common.Response{
-			Status: common.ResponseStatus.Error,
-			Errors: []*common.ErrRes{
-				{
-					ErrCode: "LOGIN_FAILED",
-					ErrMsg:  err.Error(),
-				},
-			},
-		}
+		return common.BuildErrorRes("LOGIN_FAILED", err.Error())
 	}
 
 	return &common.Response{
