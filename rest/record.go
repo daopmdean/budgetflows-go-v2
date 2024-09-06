@@ -10,14 +10,7 @@ import (
 )
 
 func CreateRecord(c *gin.Context) {
-	bearer := c.Request.Header.Get("Authorization")
-	token, err := auth.ExtractTokenFromHeader(bearer)
-	if err != nil {
-		Response(c, UnauthorizedRes())
-		return
-	}
-
-	userClaims, err := auth.ParseToken(token, conf.AppConfig.SignedKey)
+	userClaims, err := getClaims(c)
 	if err != nil {
 		Response(c, UnauthorizedRes())
 		return
@@ -30,6 +23,16 @@ func CreateRecord(c *gin.Context) {
 	}
 
 	Response(c, biz.CreateRecord(userClaims, &recordReq))
+}
+
+func getClaims(c *gin.Context) (*auth.SummerClaim, error) {
+	bearer := c.Request.Header.Get("Authorization")
+	token, err := auth.ExtractTokenFromHeader(bearer)
+	if err != nil {
+		return nil, err
+	}
+
+	return auth.ParseToken(token, conf.AppConfig.SignedKey)
 }
 
 func UpdateRecord(c *gin.Context) {
