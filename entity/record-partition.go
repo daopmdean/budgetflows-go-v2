@@ -38,15 +38,10 @@ func (pi *MonthlyPartitionInstance) Create(
 	ele interface{},
 ) *common.Response {
 	if !validPartitionVersion(version) {
-		return &common.Response{
-			Status: common.ResponseStatus.Error,
-			Errors: []*common.ErrRes{
-				{
-					ErrCode: "INVALID_PARTITION_VERSION",
-					ErrMsg:  "Invalid partition version: " + version,
-				},
-			},
-		}
+		return common.BuildErrorRes(
+			"INVALID_PARTITION_VERSION",
+			"Invalid partition version: "+version,
+		)
 	}
 
 	ins := pi.getPartition(version)
@@ -60,15 +55,10 @@ func (pi *MonthlyPartitionInstance) Query(
 	sortFields *primitive.M,
 ) *common.Response {
 	if !validPartitionVersion(version) {
-		return &common.Response{
-			Status: common.ResponseStatus.Error,
-			Errors: []*common.ErrRes{
-				{
-					ErrCode: "INVALID_PARTITION_VERSION",
-					ErrMsg:  "Invalid partition version: " + version,
-				},
-			},
-		}
+		return common.BuildErrorRes(
+			"INVALID_PARTITION_VERSION",
+			"Invalid partition version: "+version,
+		)
 	}
 
 	ins := pi.getPartition(version)
@@ -80,15 +70,10 @@ func (pi *MonthlyPartitionInstance) QueryOne(
 	filter interface{},
 ) *common.Response {
 	if !validPartitionVersion(version) {
-		return &common.Response{
-			Status: common.ResponseStatus.Error,
-			Errors: []*common.ErrRes{
-				{
-					ErrCode: "INVALID_PARTITION_VERSION",
-					ErrMsg:  "Invalid partition version: " + version,
-				},
-			},
-		}
+		return common.BuildErrorRes(
+			"INVALID_PARTITION_VERSION",
+			"Invalid partition version: "+version,
+		)
 	}
 
 	ins := pi.getPartition(version)
@@ -101,15 +86,10 @@ func (pi *MonthlyPartitionInstance) QueryWithOpt(
 	opt *options.FindOptions,
 ) *common.Response {
 	if !validPartitionVersion(version) {
-		return &common.Response{
-			Status: common.ResponseStatus.Error,
-			Errors: []*common.ErrRes{
-				{
-					ErrCode: "INVALID_PARTITION_VERSION",
-					ErrMsg:  "Invalid partition version: " + version,
-				},
-			},
-		}
+		return common.BuildErrorRes(
+			"INVALID_PARTITION_VERSION",
+			"Invalid partition version: "+version,
+		)
 	}
 
 	ins := pi.getPartition(version)
@@ -121,15 +101,10 @@ func (pi *MonthlyPartitionInstance) Count(
 	query interface{},
 ) *common.Response {
 	if !validPartitionVersion(version) {
-		return &common.Response{
-			Status: common.ResponseStatus.Error,
-			Errors: []*common.ErrRes{
-				{
-					ErrCode: "INVALID_PARTITION_VERSION",
-					ErrMsg:  "Invalid partition version: " + version,
-				},
-			},
-		}
+		return common.BuildErrorRes(
+			"INVALID_PARTITION_VERSION",
+			"Invalid partition version: "+version,
+		)
 	}
 
 	ins := pi.getPartition(version)
@@ -142,15 +117,10 @@ func (pi *MonthlyPartitionInstance) Upsert(
 	updater interface{},
 ) *common.Response {
 	if !validPartitionVersion(version) {
-		return &common.Response{
-			Status: common.ResponseStatus.Error,
-			Errors: []*common.ErrRes{
-				{
-					ErrCode: "INVALID_PARTITION_VERSION",
-					ErrMsg:  "Invalid partition version: " + version,
-				},
-			},
-		}
+		return common.BuildErrorRes(
+			"INVALID_PARTITION_VERSION",
+			"Invalid partition version: "+version,
+		)
 	}
 
 	ins := pi.getPartition(version)
@@ -162,15 +132,10 @@ func (pi *MonthlyPartitionInstance) Delete(
 	filter interface{},
 ) *common.Response {
 	if !validPartitionVersion(version) {
-		return &common.Response{
-			Status: common.ResponseStatus.Error,
-			Errors: []*common.ErrRes{
-				{
-					ErrCode: "INVALID_PARTITION_VERSION",
-					ErrMsg:  "Invalid partition version: " + version,
-				},
-			},
-		}
+		return common.BuildErrorRes(
+			"INVALID_PARTITION_VERSION",
+			"Invalid partition version: "+version,
+		)
 	}
 
 	ins := pi.getPartition(version)
