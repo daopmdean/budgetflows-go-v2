@@ -20,27 +20,3 @@ func Response(c *gin.Context, res *common.Response) {
 		c.JSON(http.StatusInternalServerError, res)
 	}
 }
-
-func UnauthorizedRes() *common.Response {
-	return &common.Response{
-		Status: common.ResponseStatus.Unauthorized,
-		Errors: []*common.ErrRes{
-			{
-				ErrCode: "UNAUTHORIZED",
-				ErrMsg:  "Unauthorized",
-			},
-		},
-	}
-}
-
-func InvalidRes(msg string) *common.Response {
-	return &common.Response{
-		Status: common.ResponseStatus.Invalid,
-		Errors: []*common.ErrRes{
-			{
-				ErrCode: "INVALID",
-				ErrMsg:  msg,
-			},
-		},
-	}
-}

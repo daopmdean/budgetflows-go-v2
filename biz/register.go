@@ -41,15 +41,7 @@ func Register(data *model.RegisterRequest) *common.Response {
 
 	hashedPassword, err := utils.HashPassword(data.Password)
 	if err != nil {
-		return &common.Response{
-			Status: common.ResponseStatus.Error,
-			Errors: []*common.ErrRes{
-				{
-					ErrCode: "REGISTER_FAILED",
-					ErrMsg:  err.Error(),
-				},
-			},
-		}
+		return common.BuildErrorRes("REGISTER_FAILED", err.Error())
 	}
 
 	registerRes := entity.AppUserDB.Create(context.TODO(), &entity.AppUser{
@@ -70,15 +62,7 @@ func Register(data *model.RegisterRequest) *common.Response {
 
 	token, err := GenerateToken(registerRes.Data.([]*entity.AppUser)[0], 24*time.Hour)
 	if err != nil {
-		return &common.Response{
-			Status: common.ResponseStatus.Error,
-			Errors: []*common.ErrRes{
-				{
-					ErrCode: "REGISTER_FAILED",
-					ErrMsg:  err.Error(),
-				},
-			},
-		}
+		return common.BuildErrorRes("REGISTER_FAILED", err.Error())
 	}
 
 	return &common.Response{

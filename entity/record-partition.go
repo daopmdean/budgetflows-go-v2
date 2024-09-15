@@ -160,17 +160,18 @@ func (pi *MonthlyPartitionInstance) PrepareCol(version string) error {
 }
 
 func (pi *MonthlyPartitionInstance) CreateIndex(version string) error {
+	idx := mongo.IndexModel{
+		Keys: bson.D{
+			{Key: "user_id", Value: 1},
+			{Key: "tags", Value: 1},
+		},
+	}
 	pi.database.
 		Client().
 		Database(pi.database.Name()).
 		Collection(getCollectionName(version)).
 		Indexes().
-		CreateOne(context.TODO(), mongo.IndexModel{
-			Keys: bson.D{
-				{Key: "user_id", Value: 1},
-				{Key: "tags", Value: 1},
-			},
-		})
+		CreateOne(context.TODO(), idx)
 
 	return nil
 }

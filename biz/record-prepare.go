@@ -28,15 +28,7 @@ func PrepareIndexes(userClaims *auth.SummerClaim, data *entity.Record) *common.R
 
 	err := entity.RecordDBPartition.PrepareCol(version)
 	if err != nil {
-		return &common.Response{
-			Status: common.ResponseStatus.Error,
-			Errors: []*common.ErrRes{
-				{
-					ErrCode: "PREPARE_ERROR",
-					ErrMsg:  err.Error(),
-				},
-			},
-		}
+		return common.BuildErrorRes("PREPARE_ERROR", err.Error())
 	}
 
 	return &common.Response{
