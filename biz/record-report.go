@@ -12,7 +12,10 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func ReportUserRecords(userClaims *auth.SummerClaim, dataReq *model.RecordGet) *common.Response {
+func ReportUserRecords(
+	userClaims *auth.SummerClaim,
+	dataReq *model.RecordGet,
+) *common.Response {
 	if userClaims.UserId == 0 {
 		return &common.Response{
 			Status:  common.ResponseStatus.Invalid,
