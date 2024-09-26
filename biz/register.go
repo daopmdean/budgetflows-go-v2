@@ -7,7 +7,7 @@ import (
 
 	"github.com/daopmdean/budgetflows-go-v2/entity"
 	"github.com/daopmdean/budgetflows-go-v2/model"
-	"github.com/daopmdean/budgetflows-go-v2/utils"
+	"github.com/daopmdean/summer/auth"
 	"github.com/daopmdean/summer/common"
 	"github.com/gin-gonic/gin"
 )
@@ -39,7 +39,7 @@ func Register(data *model.RegisterRequest) *common.Response {
 		}
 	}
 
-	hashedPassword, err := utils.HashPassword(data.Password)
+	hashedPassword, err := auth.GetHashed(data.Password)
 	if err != nil {
 		return common.BuildErrorRes("REGISTER_FAILED", err.Error())
 	}
