@@ -84,6 +84,11 @@ func (pi *PartitionInstance) getCollectionName(t time.Time) (string, error) {
 	return fmt.Sprintf("%s_%s", pi.baseColName, version), nil
 }
 
+func getVersionVN(partitionType PartitionType, t time.Time) (string, error) {
+	t = t.In(time.FixedZone("UTC+7", 7*60*60))
+	return getVersion(partitionType, t)
+}
+
 func getVersion(partitionType PartitionType, t time.Time) (string, error) {
 	switch partitionType {
 	case PartitionTypeValue.Daily:
