@@ -6,6 +6,10 @@
 
 ## Get started
 
+### Run locally
+
 ```
 go run main.go
 ```
+
+### Run with docker
