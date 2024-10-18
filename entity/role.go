@@ -3,8 +3,14 @@ package entity
 import (
 	"time"
 
+	"github.com/daopmdean/summer/mongodb"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
+
+var RoleDB = &mongodb.Instance{
+	ColName:     "role",
+	TemplateObj: &Role{},
+}
 
 type Role struct {
 	ID          *primitive.ObjectID `json:"-" bson:"_id,omitempty"`
