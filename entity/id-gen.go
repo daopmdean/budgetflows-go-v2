@@ -3,6 +3,7 @@ package entity
 import (
 	"context"
 
+	"github.com/daopmdean/budgetflows-go-v2/utils"
 	"github.com/daopmdean/summer/mongodb"
 )
 
@@ -22,4 +23,12 @@ func GenUserId() int64 {
 	}, "value", 1)
 	val := increResult.Data.([]*IdGen)[0]
 	return val.Value
+}
+
+func GenRoleCode() (int64, string) {
+	increResult := IdGenDB.IncreValue(context.TODO(), IdGen{
+		ID: "ROLE",
+	}, "value", 1)
+	val := increResult.Data.([]*IdGen)[0]
+	return val.Value, utils.GetCode(val.Value, 3)
 }
