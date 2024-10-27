@@ -23,5 +23,7 @@ type UserRole struct {
 
 type UserRoleDetail struct {
 	RoleId     int64      `json:"roleId,omitempty" bson:"role_id,omitempty"`
+	RoleCode   string     `json:"roleCode,omitempty" bson:"role_code,omitempty"`
+	Name       string     `json:"name,omitempty" bson:"name,omitempty"`
 	ValidUntil *time.Time `json:"validUntil,omitempty" bson:"valid_until,omitempty"`
 }
