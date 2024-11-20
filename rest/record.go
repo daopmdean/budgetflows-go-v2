@@ -63,7 +63,7 @@ func ReportUserRecords(c *gin.Context) {
 		return
 	}
 
-	var recordReq model.RecordGet
+	var recordReq model.RecordReport
 	if err := c.ShouldBindJSON(&recordReq); err != nil {
 		Response(c, common.InvalidRes(err.Error()))
 		return

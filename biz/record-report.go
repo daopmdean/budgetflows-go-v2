@@ -14,13 +14,10 @@ import (
 
 func ReportUserRecords(
 	userClaims *auth.SummerClaim,
-	dataReq *model.RecordGet,
+	dataReq *model.RecordReport,
 ) *common.Response {
 	if userClaims.UserId == 0 {
-		return &common.Response{
-			Status:  common.ResponseStatus.Invalid,
-			Message: "UserId is required",
-		}
+		return common.BuildInvalidRes("USER_ID_REQUIRED", "UserId is required")
 	}
 
 	var version string
