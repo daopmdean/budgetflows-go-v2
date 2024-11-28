@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/daopmdean/budgetflows-go-v2/conf"
 	"github.com/daopmdean/budgetflows-go-v2/entity"
@@ -52,7 +53,7 @@ func main() {
 	api.POST("/records/prepare", rest.PrepareIndexes)
 	api.GET("/records/partitions", rest.GetRecordPartitions)
 
-	r.Run(":5656")
+	r.Run(fmt.Sprintf(":%d", conf.AppConfig.Port))
 }
 
 func setupDB(database *mongo.Database) {
