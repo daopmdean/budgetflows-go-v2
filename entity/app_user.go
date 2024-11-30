@@ -7,12 +7,12 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-var AppUserDB = &mongodb.Instance{
+var UserDB = &mongodb.Instance{
 	ColName:     "app_user",
-	TemplateObj: &AppUser{},
+	TemplateObj: &User{},
 }
 
-type AppUser struct {
+type User struct {
 	ID          *primitive.ObjectID `json:"-" bson:"_id,omitempty"`
 	CreatedTime *time.Time          `json:"createdTime,omitempty" bson:"created_time,omitempty"`
 	UpdatedTime *time.Time          `json:"updatedTime,omitempty" bson:"updated_time,omitempty"`

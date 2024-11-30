@@ -27,7 +27,7 @@ func Login(req *model.LoginRequest) *common.Response {
 		}
 	}
 
-	queryRes := entity.AppUserDB.QueryOne(context.TODO(), &entity.AppUser{
+	queryRes := entity.UserDB.QueryOne(context.TODO(), &entity.User{
 		Username: strings.ToLower(req.Username),
 	})
 	if queryRes.Status != common.ResponseStatus.Success {
@@ -37,7 +37,7 @@ func Login(req *model.LoginRequest) *common.Response {
 		}
 	}
 
-	user := queryRes.Data.([]*entity.AppUser)[0]
+	user := queryRes.Data.([]*entity.User)[0]
 	if err := auth.CheckPasswordHash(req.Password, user.Password); err != nil {
 		return &common.Response{
 			Status:  common.ResponseStatus.Invalid,
@@ -45,7 +45,7 @@ func Login(req *model.LoginRequest) *common.Response {
 		}
 	}
 
-	token, err := GenerateToken(queryRes.Data.([]*entity.AppUser)[0], 300*24*time.Hour)
+	token, err := GenerateToken(queryRes.Data.([]*entity.User)[0], 300*24*time.Hour)
 	if err != nil {
 		return common.BuildErrorRes("LOGIN_FAILED", err.Error())
 	}
@@ -55,7 +55,7 @@ func Login(req *model.LoginRequest) *common.Response {
 		Data: []any{
 			gin.H{
 				"message": "Login success!",
-				"user":    queryRes.Data.([]*entity.AppUser)[0],
+				"user":    queryRes.Data.([]*entity.User)[0],
 				"token":   token,
 			},
 		},

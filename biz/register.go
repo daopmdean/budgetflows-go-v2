@@ -29,7 +29,7 @@ func Register(data *model.RegisterRequest) *common.Response {
 
 	data.Username = strings.ToLower(data.Username)
 
-	queryRes := entity.AppUserDB.QueryOne(context.TODO(), &entity.AppUser{
+	queryRes := entity.UserDB.QueryOne(context.TODO(), &entity.User{
 		Username: data.Username,
 	})
 	if queryRes.Status != common.ResponseStatus.NotFound {
@@ -44,7 +44,7 @@ func Register(data *model.RegisterRequest) *common.Response {
 		return common.BuildErrorRes("REGISTER_FAILED", err.Error())
 	}
 
-	registerRes := entity.AppUserDB.Create(context.TODO(), &entity.AppUser{
+	registerRes := entity.UserDB.Create(context.TODO(), &entity.User{
 		Username: data.Username,
 		UserId:   entity.GenUserId(),
 		Phone:    data.Phone,
@@ -60,7 +60,7 @@ func Register(data *model.RegisterRequest) *common.Response {
 		return registerRes
 	}
 
-	token, err := GenerateToken(registerRes.Data.([]*entity.AppUser)[0], 24*time.Hour)
+	token, err := GenerateToken(registerRes.Data.([]*entity.User)[0], 24*time.Hour)
 	if err != nil {
 		return common.BuildErrorRes("REGISTER_FAILED", err.Error())
 	}
@@ -70,7 +70,7 @@ func Register(data *model.RegisterRequest) *common.Response {
 		Data: []any{
 			gin.H{
 				"message": "Register success!",
-				"user":    registerRes.Data.([]*entity.AppUser)[0],
+				"user":    registerRes.Data.([]*entity.User)[0],
 				"token":   token,
 			},
 		},

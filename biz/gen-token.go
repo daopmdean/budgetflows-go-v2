@@ -9,7 +9,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-func GenerateToken(user *entity.AppUser, duration time.Duration) (string, error) {
+func GenerateToken(user *entity.User, duration time.Duration) (string, error) {
 	now := time.Now()
 	claims := auth.SummerClaim{
 		RegisteredClaims: jwt.RegisteredClaims{
