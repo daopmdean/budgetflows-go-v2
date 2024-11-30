@@ -30,9 +30,11 @@ func main() {
 		}
 	}()
 
-	database := mongoClient.Database("budgetflows")
+	authDb := mongoClient.Database("auth")
+	setupAuthDB(authDb)
 
-	setupDB(database)
+	appDb := mongoClient.Database("budgetflows")
+	setupAppDB(appDb)
 
 	r := gin.Default()
 	r.Use(CORSMiddleware())
@@ -56,13 +58,16 @@ func main() {
 	r.Run(fmt.Sprintf(":%d", conf.AppConfig.Port))
 }
 
-func setupDB(database *mongo.Database) {
-	entity.IdGenDB.SetDB(database)
+func setupAuthDB(db *mongo.Database) {
+	entity.UserDB.SetDB(db)
+}
 
-	entity.UserDB.SetDB(database)
-	entity.RecordDB.SetDB(database)
+func setupAppDB(db *mongo.Database) {
+	entity.IdGenDB.SetDB(db)
 
-	entity.RecordDBPartition.SetDBPartition(database)
+	entity.RecordDB.SetDB(db)
+
+	entity.RecordDBPartition.SetDBPartition(db)
 }
 
 func CORSMiddleware() gin.HandlerFunc {

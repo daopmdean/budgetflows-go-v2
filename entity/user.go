@@ -8,7 +8,7 @@ import (
 )
 
 var UserDB = &mongodb.Instance{
-	ColName:     "app_user",
+	ColName:     "user",
 	TemplateObj: &User{},
 }
 
