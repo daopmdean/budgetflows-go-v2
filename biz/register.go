@@ -5,8 +5,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/daopmdean/budgetflows-go-v2/conf"
 	"github.com/daopmdean/budgetflows-go-v2/entity"
 	"github.com/daopmdean/budgetflows-go-v2/model"
+	"github.com/daopmdean/budgetflows-go-v2/utils"
 	"github.com/daopmdean/summer/auth"
 	"github.com/daopmdean/summer/common"
 	"github.com/gin-gonic/gin"
@@ -39,7 +41,8 @@ func Register(data *model.RegisterRequest) *common.Response {
 		}
 	}
 
-	hashedPassword, err := auth.GetHashed(data.Password)
+	salt := utils.GenerateRandomString(conf.AppConfig.SaltLength)
+	hashedPassword, err := auth.GetHashed(data.Password + salt)
 	if err != nil {
 		return common.BuildErrorRes("REGISTER_FAILED", err.Error())
 	}
@@ -49,7 +52,9 @@ func Register(data *model.RegisterRequest) *common.Response {
 		UserId:   entity.GenUserId(),
 		Phone:    data.Phone,
 		Email:    data.Email,
-		Password: hashedPassword,
+
+		Password:     hashedPassword,
+		PasswordSalt: salt,
 
 		Name:    data.Name,
 		Address: data.Address,
