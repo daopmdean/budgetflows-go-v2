@@ -33,6 +33,9 @@ func main() {
 	authDb := mongoClient.Database("auth")
 	setupAuthDB(authDb)
 
+	centralizedDb := mongoClient.Database("centralized")
+	setupCentralizedDB(centralizedDb)
+
 	appDb := mongoClient.Database("budgetflows")
 	setupAppDB(appDb)
 
@@ -62,9 +65,11 @@ func setupAuthDB(db *mongo.Database) {
 	entity.UserDB.SetDB(db)
 }
 
-func setupAppDB(db *mongo.Database) {
+func setupCentralizedDB(db *mongo.Database) {
 	entity.IdGenDB.SetDB(db)
+}
 
+func setupAppDB(db *mongo.Database) {
 	entity.RecordDB.SetDB(db)
 
 	entity.RecordDBPartition.SetDBPartition(db)
