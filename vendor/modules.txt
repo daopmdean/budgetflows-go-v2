@@ -28,7 +28,7 @@ github.com/chenzhuoyu/base64x
 ## explicit; go 1.16
 github.com/chenzhuoyu/iasm/expr
 github.com/chenzhuoyu/iasm/x86_64
-# github.com/daopmdean/summer v0.0.0-20240829100553-626a42c04eca
+# github.com/daopmdean/summer v0.0.0-20241202165220-84b997f58dd8
 ## explicit; go 1.17
 github.com/daopmdean/summer/auth
 github.com/daopmdean/summer/common
