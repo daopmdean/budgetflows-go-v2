@@ -19,7 +19,7 @@ type IdGen struct {
 
 func GenUserId() int64 {
 	increResult := IdGenDB.IncreValue(context.TODO(), IdGen{
-		ID: "APP_USER",
+		ID: "USER",
 	}, "value", 1)
 	val := increResult.Data.([]*IdGen)[0]
 	return val.Value
